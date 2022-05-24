@@ -1,0 +1,56 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <iomanip>
+
+using namespace std;
+
+class Employee {
+private:
+	string firstName;
+	string lastName;
+	int age;
+
+public:
+	Employee(string, string, int);
+
+	string getFname() { return firstName; } //to get employee first name
+	string getLname() { return lastName; } //to get employee last name
+	int getAge() { return age; } //to get employee age
+	
+};
+
+Employee::Employee(string fName, string lName, int a) {
+	firstName = fName;
+	lastName = lName;
+	age = a;
+}
+
+// function to output the contents of the file 
+void ouputline(Employee w)
+{
+	cout << setw(10) << "First name" << setw(20) << "Last name" << setw(10) << "age" << endl;
+	cout << setw(5) << w.getFname() << setw(23) << w.getLname() << setw(11) << w.getAge() << endl;
+}
+
+
+
+
+int main() {
+	
+	Employee worker1("Peter", "Griffin", 32);
+	
+
+	fstream file1;  //creating the file file1 with both input/output 
+	file1.open("Employee", ios::ate); //opening the file with ios that allowa the writing and reading of file 
+	cout << "file employee created" << endl;
+	
+	file1.write((char*)&worker1, sizeof(worker1));   //writing the objects of class into the file
+	file1.read((char*)&worker1, sizeof(worker1));  // reading the objects of the class from the file 
+    
+	ouputline(worker1); //outputing the contents of the file 
+
+	
+
+	file1.close(); //closing the file 
+}
